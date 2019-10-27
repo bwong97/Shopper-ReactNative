@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Alert, View, StyleSheet, Text, Button, TextInput, TouchableHighlight } from 'react-native';
+import { Alert, View, StyleSheet, Text, Button, TextInput, TouchableHighlight, FlatList} from 'react-native';
+import axios from 'axios';
 
 export default class HomeScreen extends Component {
     constructor(props) {
@@ -21,6 +22,16 @@ export default class HomeScreen extends Component {
       },
     };
 
+    componentDidMount() {
+      // ip address will be changed to a url when hosted
+      axios.get(`http://192.168.200.184:3000/products`)
+        .then(res => {
+          const products = res.data;
+          console.log( { products } );
+          this.setState({ products: res.data });
+        })
+    }
+
     // replace with real function to do proper things
     handleLogin() {
       // this.props.navigation.navigate('Home', { user: decode(this.state.name) });
@@ -37,6 +48,11 @@ export default class HomeScreen extends Component {
             onPress={this.handleLogin} >
             <Text style={styles.title}>Scan Product</Text>
           </TouchableHighlight>
+          <FlatList
+            data={this.state.products}
+            renderItem={({item}) => <Text style={styles.item}>{item.productName}</Text>}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
       )
     }
@@ -84,6 +100,11 @@ export default class HomeScreen extends Component {
       marginTop: 5,
       alignSelf: 'stretch',
       justifyContent: 'center'
-    }
+    },
+    item: {
+      padding: 10,
+      fontSize: 18,
+      height: 44,
+    },
   });
   
