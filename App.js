@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import LoginScreen from './view/LoginScreen';
 import HomeScreen from './view/HomeScreen';
 import ScannerScreen from './view/ScannerScreen';
+import CreateScreen from './view/CreateScreen';
 
 const RootStack = createStackNavigator(
   {
@@ -24,6 +25,12 @@ const RootStack = createStackNavigator(
       screen: ScannerScreen,
       navigationOptions: () => ({
         title: `Scanner`,
+      }),
+    },
+    Create: {
+      screen: CreateScreen,
+      navigationOptions: () => ({
+        title: `Create`,
       }),
     },
   },
